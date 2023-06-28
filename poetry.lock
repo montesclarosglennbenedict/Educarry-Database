@@ -1,0 +1,15 @@
+[[package]]
+name = "assistorgapi"
+version = "0.0.4"
+description = "Unofficial API wrapper for ASSIST.org's API."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.10"
+content-hash = "15e67cd7cb74ad2bbbaea27419b6aabf9f2baa8bab0febb3a020cb54a4477bb4"
+
+[metadata.files]
+assistorgapi = []
