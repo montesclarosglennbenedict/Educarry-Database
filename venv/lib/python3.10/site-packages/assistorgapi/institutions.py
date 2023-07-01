@@ -5,7 +5,7 @@ def get_institutions():
     response = requests.get(url)
     
     if response.status_code == 200:
-        return response.json()
+        return response.text
     else:
         return None
 
@@ -14,7 +14,7 @@ def get_institutions_academic_years(sendingInstitutionId):
     response = requests.get(url)
     
     if response.status_code == 200:
-        return response.json()
+        return response.text
     else:
         return None
 

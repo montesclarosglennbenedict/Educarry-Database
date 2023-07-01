@@ -11,7 +11,7 @@ def get_agremeents(receivingInstitutionId, sendingInstitutionId, academicYearId,
     response = requests.get(url, params=params)
     
     if response.status_code == 200:
-        return response.json()
+        return response
     else:
         return None
 
@@ -25,6 +25,6 @@ def get_agreements_categories(receivingInstitutionId, sendingInstitutionId, acad
     response = requests.get(url, params=params)
     
     if response.status_code == 200:
-        return response.json()
+        return response.text
     else:
         return None

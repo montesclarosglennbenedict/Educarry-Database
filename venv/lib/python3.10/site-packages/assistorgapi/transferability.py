@@ -10,7 +10,7 @@ def get_transferability_courses(institutionId, academicYearId, listType):
     response = requests.get(url, params=params)
     
     if response.status_code == 200:
-        return response.json()
+        return response.text
     else:
         return None
 
@@ -24,6 +24,6 @@ def get_transferability_categories(institutionId, academicYearId, listType):
     response = requests.get(url, params=params)
     
     if response.status_code == 200:
-        return response.json()
+        return response.text
     else:
         return None
