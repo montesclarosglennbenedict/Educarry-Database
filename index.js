@@ -1,28 +1,39 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 
-// Set 'views' directory and template engine
-app.set('views', path.join(__dirname, 'src/views'));
-app.set('view engine', 'ejs');
+app.get('/articulation_agreements/:id', (req, res) => {
+  const folderPath = './articulation_agreements';
+  const fileId = req.params.id;
+  const filePath = path.join(folderPath, `${fileId}.json`);
 
-// Serve static files from the 'public' directory
-app.use(express.static('src/public'));
+  sendFile(res, filePath);
+});
 
-// ...
+app.get('/database_settings/:id', (req, res) => {
+  const folderPath = './database_settings';
+  const fileId = req.params.id;
+  const filePath = path.join(folderPath, `${fileId}.json`);
 
-// Include the routes
-const indexRouter = require('./src/routes/index');
-app.use('/', indexRouter);
+  sendFile(res, filePath);
+});
 
-const articulationSearchRouter = require('./src/routes/articulation-search/index');
-app.use('/articulation-search', articulationSearchRouter);
+app.get('/transferability_lists/:type/:id', (req, res) => {
+  const folderPath = `./transferability_lists/${req.params.type}`;
+  const fileId = req.params.id;
+  const filePath = path.join(folderPath, `${fileId}.json`);
 
-const majorTransferSearchRouter = require('./src/routes/major-transfer-search/index');
-app.use('/major-transfer-search', majorTransferSearchRouter);
+  sendFile(res, filePath);
+});
 
-const geSearchRouter = require('./src/routes/ge-search/index');
-app.use('/ge-search', geSearchRouter);
+function sendFile(res, filePath) {
+  if (fs.existsSync(filePath)) {
+    res.sendFile(path.resolve(filePath));
+  } else {
+    res.status(404).json({ error: 'File not found' });
+  }
+}
 
 // Error handler middleware
 app.use((err, req, res, next) => {
