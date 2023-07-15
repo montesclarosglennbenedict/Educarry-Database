@@ -1,48 +1,27 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+
 const app = express();
 
-app.get('/articulation_agreements/:id', (req, res) => {
-  const folderPath = './articulation_agreements';
-  const fileId = req.params.id;
-  const filePath = path.join(folderPath, `${fileId}.json`);
+app.get('/api/data', (req, res) => {
+  const articulation = req.query.articulation; // Access the value of the 'articulation' query parameter
 
-  sendFile(res, filePath);
+  // Use the articulation value in your logic
+  // For example, you can modify the file path based on the query parameter
+  const dataPath = path.join(__dirname, 'api', `data_${articulation}.json`);
+
+  fs.readFile(dataPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    const jsonData = JSON.parse(data);
+    res.json(jsonData);
+  });
 });
 
-app.get('/database_settings/:id', (req, res) => {
-  const folderPath = './database_settings';
-  const fileId = req.params.id;
-  const filePath = path.join(folderPath, `${fileId}.json`);
-
-  sendFile(res, filePath);
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
-
-app.get('/transferability_lists/:type/:id', (req, res) => {
-  const folderPath = `./transferability_lists/${req.params.type}`;
-  const fileId = req.params.id;
-  const filePath = path.join(folderPath, `${fileId}.json`);
-
-  sendFile(res, filePath);
-});
-
-function sendFile(res, filePath) {
-  if (fs.existsSync(filePath)) {
-    res.sendFile(path.resolve(filePath));
-  } else {
-    res.status(404).json({ error: 'File not found' });
-  }
-}
-
-// Error handler middleware
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send('Internal Server Error');
-});
-
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
-});
-
-//test 
