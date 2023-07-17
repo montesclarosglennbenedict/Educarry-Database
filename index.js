@@ -38,6 +38,37 @@ app.get('/api/AcademicYears', (req, res) => {
   });
 });
 
+app.get('/api/appsettings', (req, res) => {
+  // Use the articulation value in your logic
+  // For example, you can modify the file path based on the query parameter
+  const dataPath = path.join(__dirname, '/api/appsettings', `index.json`);
+
+  fs.readFile(dataPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    const jsonData = JSON.parse(data);
+    res.json(jsonData);
+  });
+});
+
+app.get('/api/institutions/*/transferability/availableAcademicYears', (req, res) => {
+  const dynamicSegment = req.params[0];
+  const dataPath = path.resolve(__dirname, 'api', 'institutions', dynamicSegment, 'transferability', 'availableAcademicYears', 'index.json');
+
+  fs.readFile(dataPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    const jsonData = JSON.parse(data);
+    res.json(jsonData);
+  });
+});
+
+
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -6,7 +6,6 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-assistorgapi = "0.0.6"
 
 [tool.poetry.dev-dependencies]
 
