@@ -16,6 +16,16 @@ def folder_check_create(folder):
 def index_json(file_path):
   return file_path +'/index.json'
 
+institutions_json = json.loads(assistorgapi.get_institutions())
+
+
+# https://assist.org/api/institutions/140/agreements
+
+for i in institutions_json:
+  folder_name = './api/institutions/'+str(i['id'])+'/agreements'
+  file_name = folder_name+'/index.json'
+  file_creation_edit(file_name, assistorgapi.get_institutions_agreements(str(i['id'])))
+
 # appsettings
 folder_name = './api/appsettings'
 file_name = index_json(folder_name)
@@ -36,9 +46,6 @@ file_creation_edit(file_name, assistorgapi.get_academic_years())
 # folder_check_create(folder_name)
 
 # institutions/#/transferability/availableAcademicYears
-
-institutions_json = json.loads(assistorgapi.get_institutions())
-
 for i in institutions_json:
   folder_name = './api/institutions/'+str(i['id'])+'/transferability/availableAcademicYears'
   file_name = folder_name+'/index.json'
@@ -58,3 +65,4 @@ folder_check_create(folder_name)
 for i in institutions_json:
   file_name = folder_name+'/'+str(i['id'])+'-74-IGETC.json'
   file_creation_edit(file_name, str(assistorgapi.get_transferability_courses(str(i['id']), '74', 'IGETC')))
+

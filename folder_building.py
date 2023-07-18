@@ -37,3 +37,10 @@ for i in institutions_json:
 folder_name = './api/transferability/categories'
 folder_check_create(folder_name)
 
+# https://assist.org/api/institutions/140/agreements
+
+institutions_json = json.loads(assistorgapi.get_institutions())
+
+for i in institutions_json:
+  folder_name = './api/institutions/'+str(i['id'])+'/agreements'
+  folder_check_create(folder_name)
